@@ -1,0 +1,87 @@
+# LiuTitle 消息（支持 & 色码、&#RRGGBB 与 MiniMessage；{key} 为占位符）
+prefix: '&8[&eLiuTitle&8] &r'
+
+general:
+  no-permission: '&c你没有权限执行此操作。'
+  player-only: '&c该命令只能由玩家执行。'
+  player-not-found: '&c找不到玩家：&f{player}'
+  usage: '&c用法：&f{usage}'
+  unknown: '&c未知子命令 &f{input}&c，使用 &f/liutitle help &c查看帮助。'
+  number-format: '&c数字格式不正确：&f{value}'
+
+title:
+  not-found: '&c称号不存在：&f{id}'
+
+shop:
+  buy-success: '&a购买成功！称号 &f{name} &a已放入仓库。'
+  renew-success: '&a称号 &f{name} &a已续期到 &f{date}&a。'
+  already-owned: '&e你已经拥有称号 &f{name}&e。'
+  buy-fail-vault: '&c金币不足，需要 &f{amount} &c金币。'
+  buy-fail-playerPoints: '&c点券不足，需要 &f{amount} &c点券。'
+  buy-fail-itemStack: '&c物品不足，需要 &f{amount}&c 个 &f{item}&c。'
+  buy-fail-permission: '&c你没有购买该称号所需的权限：&f{perm}'
+  buy-fail-activity: '&c活动称号无法直接购买，请通过活动获取。'
+  buy-fail-unknown: '&c该称号的购买方式暂不支持：&f{type}'
+  no-money: '&c余额不足。'
+  inventory-full: '&c背包已满，无法购买该称号。'
+  price-free: '免费'
+
+warehouse:
+  empty: '&7你还没有任何称号，去商城看看吧！'
+  equipped: '&a已佩戴展示称号 &f{name}&a。'
+  equipped-buff: '&a已佩戴属性称号 &f{name}&a。'
+  unequipped: '&7已取消佩戴称号 &f{name}&7。'
+  none-equipped: '&7你当前没有佩戴任何称号。'
+  cooldown: '&c切换称号冷却中，还需 &f{seconds} &c秒。'
+  expired-removed: '&7称号 &f{name} &7已过期并被移除。'
+  not-owned: '&c你还没有该称号。'
+  position-mismatch: '&c该称号不支持该佩戴位置。'
+  buff-disabled: '&c属性称号功能已被服务器关闭。'
+  list-header: '&7你的称号（&f{count}&7 个）：'
+  list-line: ' &8- &f{name} &8| &7到期：&f{expire} &8| &a{status}'
+  status-show: '展示中'
+  status-buff: '属性中'
+
+admin:
+  created: '&a已创建称号 &f#{id} {name}&a。'
+  create-fail: '&c创建称号失败，请检查控制台日志。'
+  deleted: '&a已删除称号 &f#{id}&a（含属性、购买条件与玩家记录）。'
+  hidden: '&7已隐藏称号 &f#{id} {name}&7。'
+  shown: '&a已显示称号 &f#{id} {name}&a。'
+  gave: '&a已给 &f{player} &a发放称号 &f{name}&a，到期：&f{expire}&a。'
+  give-fail: '&c发放失败，请检查控制台日志。'
+  took: '&a已从 &f{player} &a撤销称号 &f{name}&a。'
+  removed-player-title: '&a已移除 &f{player} &a的称号 &f{name}&a。'
+  confirm-delete: '&e再次执行 &f/liutitle admin delete {id} &e可确认删除称号 &f{name}&e（10 秒内有效）。'
+  reloaded: '&a配置与数据已重载。'
+  import-start: '&e开始导入 PlayerTitle 数据：&f{path}'
+  import-done: '&a导入完成：称号 &f{titles} &a个，属性 &f{buffs} &a条，条件 &f{requires} &a条，未过期玩家称号 &f{owned} &a条（跳过过期 &f{expired} &a条）。'
+
+receive:
+  title: '&a恭喜获得称号：&f{name}&a！'
+
+help:
+  command:
+    - ''
+    - ' &3Liu&bTitle &8▪ &7称号系统'
+    - ''
+    - ' &7玩家命令:'
+    - '   &8- &f/liutitle &7打开称号仓库'
+    - '   &8- &f/liutitle shop &7打开称号商城'
+    - '   &8- &f/liutitle list &7列出我的称号'
+    - '   &8- &f/liutitle set <id> &7佩戴展示称号'
+    - '   &8- &f/liutitle buff <id> &7佩戴属性称号'
+    - '   &8- &f/liutitle clear &7取消佩戴'
+    - ''
+  admin:
+    - ' &7管理命令:'
+    - '   &8- &f/liutitle admin shop &7商城管理 GUI'
+    - '   &8- &f/liutitle view <玩家> &7查看/管理玩家称号'
+    - '   &8- &f/liutitle admin create <名称> [天数] [类型] [金额] [描述...]'
+    - '   &8- &f/liutitle admin delete <id>'
+    - '   &8- &f/liutitle admin hide <id> &7/ &fshow <id>'
+    - '   &8- &f/liutitle admin give <玩家> <id> [天数]'
+    - '   &8- &f/liutitle admin take <玩家> <id>'
+    - '   &8- &f/liutitle admin import <文件或目录>'
+    - '   &8- &f/liutitle admin reload'
+    - ''

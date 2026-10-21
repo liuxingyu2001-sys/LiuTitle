@@ -1,0 +1,70 @@
+# LiuTitle 主配置
+
+# 默认称号（玩家没有任何称号时由占位符显示）
+default-title: "&7萌新"
+
+# 称号存储时前后缀（发放称号时直接写进称号名）
+prefix-brackets: ""
+suffix-brackets: ""
+
+# 显示时前后缀（只在占位符输出时拼接）
+#display-prefix: "&f[ "
+#display-suffix: " &f]"
+display-prefix: ""
+display-suffix: ""
+# 切换称号冷却（秒），0 = 关闭
+toggle-cooldown: 1
+
+# 称号属性
+buff:
+  enabled: true
+  # 禁用属性称号的世界
+  disabled-worlds: []
+
+# 玩家获得新称号后是否自动佩戴
+auto-use: false
+
+# 登录后延迟处理称号属性（秒）
+login-delay: 1
+
+# 称号默认有效期（天），0 = 永久
+default-days: 0
+
+# 额外注册的 PlaceholderAPI 标识（兼容旧占位符）
+# 例如 playerTitle → %playerTitle_use%；若同标识已被占用（原插件仍在），会自动跳过
+placeholder-aliases: ['playerTitle']
+
+# 商城
+shop:
+  # 默认排序：id / name / price
+  sort: 'id'
+  # 是否显示被隐藏的称号（默认 false，仅管理员管理界面可见）
+  show-hidden: false
+
+# 数据导入（/liutitle admin import）
+import:
+  enabled: true
+
+# 存储（连接凭据复用 LiuLib，库名与表前缀按插件隔离）
+# - LiuLib 的 mysql 已启用 → 用同一套 host/账号/密码，但连接本插件自己的库
+# - LiuLib 的 mysql 未启用 → 使用本插件自己的 SQLite 文件 plugins/LiuTitle/liutitle.db
+# - 两者都失败时才回退内置 HikariCP SQLite
+storage:
+  # auto = LiuLib 的 mysql 已启用则 MySQL，否则本插件 SQLite
+  # mysql = 强制 MySQL（LiuLib 未启用时告警并回退 SQLite）
+  # sqlite = 强制本插件 SQLite
+  driver: 'auto'
+  # 本插件专用库名；留空才回退 LiuLib 的库（不推荐）
+  database: 'liutitle'
+  # 表名前缀；每插件独立前缀，避免与 LiuLib / 其他插件撞表
+  table-prefix: 'liutitle_'
+  # SQLite 文件名（相对 plugins/LiuTitle/）
+  sqlite-file: 'liutitle.db'
+  # 启动时执行 CREATE DATABASE IF NOT EXISTS（账号无权限时只警告）
+  auto-create-database: true
+  # 连接池大小；0 = 跟随 LiuLib 的 mysql.pool-size
+  pool-size: 0
+  # 连接超时（毫秒）；0 = 跟随 LiuLib 的 mysql.connection-timeout-ms
+  connection-timeout-ms: 0
+  # 是否使用 SSL；留空 = 跟随 LiuLib 的 mysql.use-ssl
+  use-ssl: ''

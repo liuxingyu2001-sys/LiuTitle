@@ -1,0 +1,63 @@
+name: LiuTitle
+version: ${project.version}
+main: com.liuxingyu.liutitle.LiuTitle
+api-version: '1.21'
+folia-supported: true
+authors: [liuxingyu2001]
+description: 称号插件 - 仓库/商城/属性/API/PAPI，支持导入 PlayerTitle 数据
+website: https://github.com/liuxingyu2001-sys
+libraries:
+  - com.zaxxer:HikariCP:5.1.0
+  - com.mysql:mysql-connector-j:8.0.33
+  - org.xerial:sqlite-jdbc:3.49.1.0
+# 硬依赖：LiuLib（连接池/文本/冷却/经济/调度/物品规格）
+depend: [LiuLib]
+softdepend: [PlaceholderAPI, Vault, PlayerPoints]
+commands:
+  liutitle:
+    description: 称号系统
+    usage: /liutitle <shop|list|set|buff|clear|view|admin|help>
+    aliases: [lt, liutitle]
+permissions:
+  liutitle.use:
+    description: 称号基础功能（打开仓库、佩戴称号）
+    default: true
+  liutitle.shop:
+    description: 打开称号商城并购买
+    default: true
+  liutitle.admin:
+    description: 称号管理总权限
+    default: op
+    children:
+      liutitle.admin.create: true
+      liutitle.admin.delete: true
+      liutitle.admin.modify: true
+      liutitle.admin.give: true
+      liutitle.admin.import: true
+      liutitle.admin.reload: true
+      liutitle.admin.view: true
+      liutitle.admin.shop: true
+  liutitle.admin.create:
+    description: 创建称号
+    default: op
+  liutitle.admin.delete:
+    description: 删除称号
+    default: op
+  liutitle.admin.modify:
+    description: 修改称号（隐藏/显示/图标等）
+    default: op
+  liutitle.admin.give:
+    description: 给玩家发放/撤销称号
+    default: op
+  liutitle.admin.import:
+    description: 导入 PlayerTitle 数据
+    default: op
+  liutitle.admin.reload:
+    description: 重载配置
+    default: op
+  liutitle.admin.view:
+    description: 查看/管理任意玩家的仓库
+    default: op
+  liutitle.admin.shop:
+    description: 打开称号管理商城
+    default: op

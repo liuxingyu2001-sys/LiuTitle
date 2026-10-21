@@ -1,0 +1,195 @@
+# LiuTitle GUI 配置
+# 所有 item 字段支持 LiuLib 物品规格：
+#   name_tag / minecraft:paper / ce:xxx / lib:gift:spring / base64:... / nbt:...
+# 占位符多行值（${description} 等）按 \n 拆成多行 lore。
+
+shop:
+  title: "&f[&e称号商城&f]"
+  size: 54
+  slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+  page-prev: 45
+  page-next: 53
+  close: 49
+  info: 4
+  item:
+    item: 'name_tag'
+    enchant: true
+    lore:
+      - ''
+      - '&f[ &c称号说明 &f]'
+      - '&8▪ &7称号名称 &f${titleName}'
+      - '&8▪ &7有效天数 &f${day}'
+      - ''
+      - '&f[ &c称号描述 &f]'
+      - '${description}'
+      - ''
+      - '&f[ &c称号属性 &f]'
+      - '${buff}'
+      - ''
+      - '&f[ &c称号价格 &f]'
+      - '${price}'
+      - ''
+      - '${buyButton}'
+  buttons:
+    buy: '&8[&a✔&8] &a点击购买'
+    owned: '&8[&a✔&8] &a已拥有'
+    renew: '&8[&a✔&8] &a点击续期'
+    unable: '&8[&c✘&8] &7条件不足，无法购买'
+    activity: '&8[&c✘&8] &7活动称号，无法直接购买'
+  info-item:
+    item: 'chest'
+    name: '   &8[&6商城信息&8]'
+    lore:
+      - '&8▪ &7在售称号 &f${shopCount} &7个'
+      - '&8▪ &7我的称号 &f${count} &7个'
+  close-item:
+    item: 'barrier'
+    name: '    &8[&c关闭&8]'
+  prev-item:
+    item: 'paper'
+    name: '    &8[&a上一页&8]'
+    lore:
+      - '&8▪ &7当前页码 &a${page}'
+  next-item:
+    item: 'paper'
+    name: '    &8[&a下一页&8]'
+    lore:
+      - '&8▪ &7当前页码 &a${page}'
+
+warehouse:
+  title: "&f[&e称号仓库&f]"
+  size: 54
+  slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+  page-prev: 45
+  page-next: 53
+  close: 49
+  info: 4
+  item:
+    item: 'name_tag'
+    lore:
+      - ''
+      - '&f[ &c称号信息 &f]'
+      - '&8▪ &7称号名称 &f${titleName}'
+      - '&8▪ &7到期时间 &f${expire}'
+      - '&8▪ &7可用位置 &f${position}'
+      - '&8▪ &7当前状态 &f${status}'
+      - ''
+      - '${description}'
+      - ''
+      - '&8[&a✔&8] &a左键佩戴展示称号'
+      - '&8[&a✔&8] &a右键佩戴属性称号'
+      - '&8[&b⟳&8] &bShift+右键续期（再次购买）'
+  buttons:
+    equipped: '&a已佩戴'
+    unequipped: '&7未佩戴'
+  info-item:
+    item: 'chest'
+    name: '   &8[&6称号仓库&8]'
+    lore:
+      - '&8▪ &7拥有称号 &f${count} &7个'
+      - '&8▪ &7称号商城 &f/liutitle shop'
+  close-item:
+    item: 'barrier'
+    name: '    &8[&c关闭&8]'
+  prev-item:
+    item: 'paper'
+    name: '    &8[&a上一页&8]'
+  next-item:
+    item: 'paper'
+    name: '    &8[&a下一页&8]'
+
+adminShop:
+  title: "&f[&e称号商城管理&f]"
+  size: 54
+  slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+  page-prev: 45
+  page-next: 53
+  close: 49
+  item:
+    item: 'name_tag'
+    enchant: true
+    lore:
+      - ''
+      - '&f[ &c称号 &f]'
+      - '&8▪ &7编号 &f${id}'
+      - '&8▪ &7名称 &f${titleName}'
+      - '&8▪ &7状态 &f${hidden}'
+      - '&8▪ &7天数 &f${day}'
+      - '&8▪ &7价格 &f${price}'
+      - '&8▪ &7拥有玩家 &f${buyers}'
+      - ''
+      - '${description}'
+      - ''
+      - '&8[&a✔&8] &a左键切换隐藏/显示'
+      - '&8[&a✔&8] &a右键查看拥有玩家'
+      - '&8[&c✘&8] &cShift+右键删除称号'
+  buttons:
+    hidden: '&c隐藏中'
+    visible: '&a展示中'
+  close-item:
+    item: 'barrier'
+    name: '    &8[&c关闭&8]'
+  prev-item:
+    item: 'paper'
+    name: '    &8[&a上一页&8]'
+  next-item:
+    item: 'paper'
+    name: '    &8[&a下一页&8]'
+
+adminOwners:
+  title: "&f[&e${titleName} &7的拥有者&f]"
+  size: 54
+  slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+  page-prev: 45
+  page-next: 53
+  close: 49
+  item:
+    item: 'player_head'
+    lore:
+      - ''
+      - '&8▪ &7玩家 &f${player}'
+      - '&8▪ &7到期 &f${expire}'
+      - '&8▪ &7状态 &f${status}'
+      - ''
+      - '&8[&c✘&8] &c点击移除该玩家的此称号'
+  buttons:
+    equipped: '&a佩戴中'
+    unequipped: '&7未佩戴'
+  close-item:
+    item: 'barrier'
+    name: '    &8[&c关闭&8]'
+  prev-item:
+    item: 'paper'
+    name: '    &8[&a上一页&8]'
+  next-item:
+    item: 'paper'
+    name: '    &8[&a下一页&8]'
+
+adminPlayer:
+  title: "&f[&e${player} &7的称号仓库&f]"
+  size: 54
+  slots: [10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+  page-prev: 45
+  page-next: 53
+  close: 49
+  item:
+    item: 'name_tag'
+    lore:
+      - ''
+      - '&8▪ &7称号 &f${titleName} &8(#${titleId})'
+      - '&8▪ &7到期 &f${expire}'
+      - '&8▪ &7状态 &f${status}'
+      - ''
+      - '&8[&c✘&8] &c点击移除该称号'
+  buttons:
+    equipped: '&a佩戴中'
+    unequipped: '&7未佩戴'
+  close-item:
+    item: 'barrier'
+    name: '    &8[&c关闭&8]'
+  prev-item:
+    item: 'paper'
+    name: '    &8[&a上一页&8]'
+  next-item:
+    item: 'paper'
+    name: '    &8[&a下一页&8]'

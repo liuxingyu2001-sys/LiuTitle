@@ -283,6 +283,7 @@ public final class PlayerTitleService {
 
     public void reloadOnline() {
         for (Player player : Bukkit.getOnlinePlayers()) {
+            buffService.clear(player);
             load(player);
             applyEquippedBuff(player);
         }

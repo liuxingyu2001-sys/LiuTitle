@@ -1,5 +1,6 @@
 com/liuxingyu/liutitle/storage/LiuLibSql.class
 com/liuxingyu/liutitle/papi/TitleExpansion.class
+com/liuxingyu/liutitle/util/Defaults.class
 com/liuxingyu/liutitle/event/TitleEquipEvent.class
 com/liuxingyu/liutitle/config/GuiConfig$Menu.class
 com/liuxingyu/liutitle/storage/Schema.class

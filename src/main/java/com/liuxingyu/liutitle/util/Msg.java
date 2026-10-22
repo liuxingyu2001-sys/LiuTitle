@@ -22,6 +22,7 @@ public final class Msg {
     }
 
     public synchronized void reload() {
+        Defaults.merge(plugin, "messages.yml");
         File file = new File(plugin.getDataFolder(), "messages.yml");
         if (!file.exists()) {
             plugin.saveResource("messages.yml", false);

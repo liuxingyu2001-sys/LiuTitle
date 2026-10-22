@@ -31,4 +31,5 @@
 /home/liu/plugins/LiuTitle/src/main/java/com/liuxingyu/liutitle/storage/LocalSql.java
 /home/liu/plugins/LiuTitle/src/main/java/com/liuxingyu/liutitle/storage/Schema.java
 /home/liu/plugins/LiuTitle/src/main/java/com/liuxingyu/liutitle/storage/Sql.java
+/home/liu/plugins/LiuTitle/src/main/java/com/liuxingyu/liutitle/util/Defaults.java
 /home/liu/plugins/LiuTitle/src/main/java/com/liuxingyu/liutitle/util/Msg.java

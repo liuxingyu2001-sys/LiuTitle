@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +83,10 @@ public final class MenuManager implements Listener {
         if (menu == null) {
             return;
         }
-        List<PlayerTitle> owned = playerTitleService.owned(player.getUniqueId());
+        List<PlayerTitle> owned = new ArrayList<>(playerTitleService.owned(player.getUniqueId()));
+        owned.sort(Comparator.comparingInt((PlayerTitle item) -> titleService.weight(item.titleId()))
+                .reversed()
+                .thenComparingInt(PlayerTitle::titleId));
         if (owned.isEmpty()) {
             msg.send(player, "warehouse.empty");
         }
@@ -106,8 +110,7 @@ public final class MenuManager implements Listener {
         if (menu == null) {
             return;
         }
-        List<Title> titles = titleService.all();
-        titles.sort((a, b) -> Integer.compare(a.id(), b.id()));
+        List<Title> titles = titleService.allSorted();
         int pages = pages(menu, titles.size());
         int current = clamp(page, pages);
         MenuHolder holder = new MenuHolder(MenuHolder.Type.ADMIN_SHOP, current);
@@ -182,6 +185,7 @@ public final class MenuManager implements Listener {
         ph.put("price", titleService.priceLabel(title));
         ph.put("buyType", title.legacyBuyType().id());
         ph.put("position", titleService.positionLabel(title));
+        ph.put("weight", String.valueOf(titleService.weight(title.id())));
 
         PlayerTitle owned = playerTitleService.find(player.getUniqueId(), title.id());
         String button;
@@ -223,6 +227,7 @@ public final class MenuManager implements Listener {
         ph.put("price", titleService.priceLabel(title));
         ph.put("description", title.description());
         ph.put("buyers", String.valueOf(playerTitleService.owners(title.id()).size()));
+        ph.put("weight", String.valueOf(titleService.weight(title.id())));
         return build(menu.item(), menu.item().item(), ph);
     }
 
@@ -463,6 +468,7 @@ public final class MenuManager implements Listener {
         Integer id = confirmTitle.get(player.getUniqueId());
         if (last != null && id != null && id == title.id() && now - last < 10_000L) {
             titleService.delete(title.id());
+            playerTitleService.reloadOnline();
             confirmAt.remove(player.getUniqueId());
             confirmTitle.remove(player.getUniqueId());
             openAdminShop(player, 0);

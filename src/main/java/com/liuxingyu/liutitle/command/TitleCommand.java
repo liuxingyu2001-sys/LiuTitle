@@ -237,6 +237,7 @@ public final class TitleCommand implements CommandExecutor, TabCompleter {
                 }
                 int id = parseInt(args[2], -1);
                 if (id > 0 && titleService.delete(id)) {
+                    playerTitleService.reloadOnline();
                     msg.send(sender, "admin.deleted", "{id}", id);
                 } else {
                     msg.send(sender, "title.not-found", "{id}", args[2]);
@@ -260,6 +261,30 @@ public final class TitleCommand implements CommandExecutor, TabCompleter {
                 titleService.setHidden(title.id(), hidden);
                 msg.send(sender, hidden ? "admin.hidden" : "admin.shown",
                         "{id}", title.id(), "{name}", title.name());
+                return true;
+            }
+            case "weight" -> {
+                if (!require(sender, "liutitle.admin.modify")) {
+                    return true;
+                }
+                if (args.length < 4) {
+                    msg.send(sender, "general.usage", "{usage}", "/liutitle admin weight <ID> <权重>");
+                    return true;
+                }
+                Title title = resolve(args[2]);
+                if (title == null) {
+                    msg.send(sender, "title.not-found", "{id}", args[2]);
+                    return true;
+                }
+                String raw = args[3].trim();
+                if (!raw.matches("-?\\d{1,9}")) {
+                    msg.send(sender, "general.usage", "{usage}", "/liutitle admin weight <ID> <权重>");
+                    return true;
+                }
+                int weight = parseInt(raw, 0);
+                titleService.setWeight(title.id(), weight);
+                msg.send(sender, "admin.weight-set", "{id}", title.id(),
+                        "{name}", title.name(), "{weight}", weight);
                 return true;
             }
             case "give" -> {
@@ -394,14 +419,14 @@ public final class TitleCommand implements CommandExecutor, TabCompleter {
             switch (args[0].toLowerCase(Locale.ROOT)) {
                 case "set", "buff" -> titleService.all().forEach(t -> out.add(String.valueOf(t.id())));
                 case "admin" -> out.addAll(List.of("shop", "create", "delete", "hide", "show",
-                        "give", "take", "import", "reload"));
+                        "weight", "give", "take", "import", "reload"));
                 case "view" -> Bukkit.getOnlinePlayers().forEach(p -> out.add(p.getName()));
                 default -> {
                 }
             }
         } else if (args.length == 3 && "admin".equalsIgnoreCase(args[0])) {
             switch (args[1].toLowerCase(Locale.ROOT)) {
-                case "delete", "hide", "show" -> titleService.all().forEach(t -> out.add(String.valueOf(t.id())));
+                case "delete", "hide", "show", "weight" -> titleService.all().forEach(t -> out.add(String.valueOf(t.id())));
                 case "give", "take", "view" -> Bukkit.getOnlinePlayers().forEach(p -> out.add(p.getName()));
                 default -> {
                 }

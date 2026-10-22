@@ -34,6 +34,30 @@ public final class TitleDao {
         return sql.table("title_require");
     }
 
+    private String weights() {
+        return sql.table("title_weight");
+    }
+
+    /** 称号显示权重（title_id → weight）；没有记录按 0 处理。 */
+    public Map<Integer, Integer> loadWeights() {
+        Map<Integer, Integer> weights = new LinkedHashMap<>();
+        for (int[] row : sql.query("SELECT title_id, weight FROM " + weights(),
+                rs -> new int[]{rs.getInt(1), rs.getInt(2)})) {
+            weights.put(row[0], row[1]);
+        }
+        return weights;
+    }
+
+    public void setWeight(int titleId, int weight) {
+        if (sql.mysql()) {
+            sql.update("INSERT INTO " + weights() + " (title_id, weight) VALUES (?, ?)"
+                    + " ON DUPLICATE KEY UPDATE weight = VALUES(weight)", titleId, weight);
+        } else {
+            sql.update("INSERT OR REPLACE INTO " + weights() + " (title_id, weight) VALUES (?, ?)",
+                    titleId, weight);
+        }
+    }
+
     public Map<Integer, Title> loadAll() {
         Map<Integer, Title> titles = new LinkedHashMap<>();
         for (Title title : sql.query("SELECT * FROM " + list() + " ORDER BY id", this::mapTitle)) {
@@ -117,6 +141,7 @@ public final class TitleDao {
         sql.update("DELETE FROM " + buffs() + " WHERE title_id = ?", id);
         sql.update("DELETE FROM " + requires() + " WHERE title_id = ?", id);
         sql.update("DELETE FROM " + sql.table("title_player") + " WHERE title_id = ?", id);
+        sql.update("DELETE FROM " + weights() + " WHERE title_id = ?", id);
     }
 
     public void insertBuff(Buff buff) {

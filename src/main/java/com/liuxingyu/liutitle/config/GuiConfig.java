@@ -4,6 +4,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.liuxingyu.liutitle.util.Defaults;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public final class GuiConfig {
     private final Map<String, Menu> menus = new HashMap<>();
 
     public static GuiConfig load(JavaPlugin plugin) {
+        Defaults.merge(plugin, "gui.yml");
         File file = new File(plugin.getDataFolder(), "gui.yml");
         if (!file.exists()) {
             plugin.saveResource("gui.yml", false);

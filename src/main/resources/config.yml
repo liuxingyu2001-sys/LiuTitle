@@ -36,7 +36,7 @@ placeholder-aliases: ['playerTitle']
 
 # 商城
 shop:
-  # 默认排序：id / name / price
+  # 默认排序：id / name / price；设置了显示权重的称号优先按权重降序
   sort: 'id'
   # 是否显示被隐藏的称号（默认 false，仅管理员管理界面可见）
   show-hidden: false

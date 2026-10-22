@@ -11,6 +11,7 @@ import com.liuxingyu.liutitle.util.Msg;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,7 @@ public final class TitleService {
     private final Settings settings;
     private final Msg msg;
     private volatile Map<Integer, Title> cache = Map.of();
+    private volatile Map<Integer, Integer> weights = Map.of();
 
     public TitleService(Logger logger, TitleDao dao, Settings settings, Msg msg) {
         this.logger = logger;
@@ -36,6 +38,7 @@ public final class TitleService {
     public void load() {
         Map<Integer, Title> loaded = new LinkedHashMap<>(dao.loadAll());
         this.cache = loaded;
+        this.weights = new HashMap<>(dao.loadWeights());
         logger.info("已加载称号 " + loaded.size() + " 个");
     }
 
@@ -49,6 +52,30 @@ public final class TitleService {
 
     public List<Title> all() {
         return new ArrayList<>(cache.values());
+    }
+
+    /** 按显示权重降序排序的全部称号（管理商城用）。 */
+    public List<Title> allSorted() {
+        List<Title> list = new ArrayList<>(cache.values());
+        list.sort(comparator());
+        return list;
+    }
+
+    /** 显示权重：越大越靠前，未设置为 0。 */
+    public int weight(int titleId) {
+        Integer value = weights.get(titleId);
+        return value == null ? 0 : value;
+    }
+
+    public boolean setWeight(int titleId, int weight) {
+        if (get(titleId) == null) {
+            return false;
+        }
+        dao.setWeight(titleId, weight);
+        Map<Integer, Integer> next = new HashMap<>(weights);
+        next.put(titleId, weight);
+        this.weights = next;
+        return true;
     }
 
     public Title byName(String raw) {
@@ -77,11 +104,15 @@ public final class TitleService {
     }
 
     private Comparator<Title> comparator() {
-        return switch (settings.shopSort()) {
+        Comparator<Title> secondary = switch (settings.shopSort()) {
             case "name" -> Comparator.comparing(Title::name, String.CASE_INSENSITIVE_ORDER);
             case "price" -> Comparator.comparingDouble(this::priceValue).thenComparingInt(Title::id);
             default -> Comparator.comparingInt(Title::id);
         };
+        // 权重优先：权重大的排前面；权重相同再按 shop.sort 的规则排。
+        return Comparator.comparingInt((Title title) -> weight(title.id()))
+                .reversed()
+                .thenComparing(secondary);
     }
 
     private double priceValue(Title title) {

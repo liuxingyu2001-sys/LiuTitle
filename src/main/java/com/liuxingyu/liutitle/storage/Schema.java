@@ -41,6 +41,10 @@ public final class Schema {
                 + "buy_data VARCHAR(10000),"
                 + "create_time VARCHAR(32)"
                 + suffix);
+        sql.execute("CREATE TABLE IF NOT EXISTS " + sql.table("title_weight") + " ("
+                + "title_id INT NOT NULL PRIMARY KEY,"
+                + "weight INT NOT NULL DEFAULT 0"
+                + suffix);
         sql.execute("CREATE TABLE IF NOT EXISTS " + sql.table("title_player") + " ("
                 + "id " + pk + ","
                 + "player_name VARCHAR(64) NOT NULL,"

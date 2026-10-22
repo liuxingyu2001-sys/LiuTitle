@@ -197,7 +197,7 @@ public final class ImportService {
         int requires = 0;
         int owned = 0;
         int expired = 0;
-        String url = "jdbc:sqlite:" + file.toAbsolutePath() + "?mode=ro";
+        String url = "jdbc:sqlite:file:" + file.toAbsolutePath() + "?mode=ro";
         try (Connection connection = DriverManager.getConnection(url);
              Statement statement = connection.createStatement()) {
             try (ResultSet rs = statement.executeQuery("SELECT * FROM title_list")) {
